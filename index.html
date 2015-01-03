@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="AchieveApp">
+	<head>
+		<title>Achieve Your Life</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="Scripts/bootstrap.min.js"></script>
+		<style type="text/css">
+			.col {
+				border: 1px solid;
+			}
+		</style>
+	</head>
+
+	<body ng-controller="AchievementController">
+
+		<div class="container">
+			<div class="col-mid-5 col-md-offset-4">
+				<h1>Start Achieving!</h1>
+			</div>
+
+			<div class="row">
+
+				<div class="col-md-5 col">				
+					<h3>Locked</h3>
+					<div class="achievement" ng-if="achievement.Current < achievement.Total" ng-repeat="achievement in achievements">
+						<h4 class="title">{{achievement.Title}}</h4>
+						<p class="description">{{achievement.Description}}</p>
+						
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{acheivement.Current}}" aria-valuemin="0" aria-valuemax="{{achievement.Total}}" style="width: {{achievement.Current / achievement.Total * 100}}%";>
+						    {{achievement.Current}} / {{achievement.Total}}
+					  		</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-md-5 col-md-offset-2 col">
+					<h3>Achieved</h3>
+					<div class="achievement" ng-if="achievement.Current >= achievement.Total" ng-repeat="achievement in achievements">
+						<h4 class="title">{{achievement.Title}}</h4>
+						<p class="description">{{achievement.Description}}</p>
+
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{acheivement.Current}}" aria-valuemin="0" aria-valuemax="{{achievement.Total}}" style="width: {{achievement.Current / achievement.Total * 100}}%";>
+						    {{achievement.Current}} / {{achievement.Total}}
+					  		</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<script src="Scripts/angular.min.js"></script>
+		<script src="Scripts/Controllers/AchievementController.js"></script>
+		<script src="Scripts/App.js"></script>
+	</body>
+
+</html>

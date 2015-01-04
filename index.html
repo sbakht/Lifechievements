@@ -51,11 +51,11 @@
                                     <label>Description:</label>
                                     <input type="text" ng-model="form.Description" required />
                                     <br>
-                                    <label>Goal Amount(1-1,000,000):</label>
-                                    <input type="number" ng-model="form.Total" ng-min="1" ng-max="1000000" required />
+                                    <label>Goal Amount:</label>
+                                    <input type="number" ng-model="form.Total" min="1" max="1000000" required />
                                     <br>
-                                    <label>Points(0-100):</label>
-                                    <input type="number" ng-model="form.Points" ng-min="0" ng-max="100" required/>
+                                    <label>Points:</label>
+                                    <input type="number" ng-model="form.Points" min="0" max="100" required/>
                                     <br>
                                     
                             </div>
@@ -86,8 +86,8 @@
 							  		</div>
 								</div>
 								<div style="display:block">
-									<input style="width:25%;margin-left:5px;" type="number" ng-model="increment" placeholder="1">
-									<button style="width:15%;" ng-click="achievement.Current = achievement.Current + increment">Add</button>
+									<input style="width:12%;margin-left:5px;" min="1" max="1000000" type="number" ng-model="increment" placeholder="1">
+									<button ng-click="achievement.Current = achievement.Current + increment">Add</button>
 								</div>
 							</div>
 						</div>

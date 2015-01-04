@@ -2,6 +2,7 @@ var CreateAchievementController = function ($scope, $modal, AchievementFactory) 
 
 	$scope.achievements = AchievementFactory.getAchievementList();
 
+
   $scope.open = function (size) {
 
     var modalInstance = $modal.open({
@@ -16,8 +17,7 @@ var CreateAchievementController = function ($scope, $modal, AchievementFactory) 
     });
 
     modalInstance.result.then(function (form) {
-      $scope.selected = form;
-      $scope.achievements.push({ Title : form.Title, Description : form.Description, Current : 0, Total : form.Total});
+      $scope.achievements.push({ Title : form.Title, Description : form.Description, Current : 0, Total : form.Total, Points : form.Points});
     });
   };
 };

@@ -29,6 +29,12 @@
             .header{
                 text-align: center;
             }
+
+            .pointsGained {
+            	text-align: center;
+            	font-size: 35px;
+            	color: rgb(3, 205, 28);
+            }
 			.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 		</style>
 	</head>
@@ -85,8 +91,8 @@
                                 </progressbar>
 
 								<div style="display:block">
-									<input style="width:12%;margin-left:5px;" min="1" max="1000000" type="number" ng-model="increment" placeholder="1">
-									<button ng-click="achievement.Current = achievement.Current + increment">Add</button>
+									<input style="width:12%;margin-left:5px;" min="1" max="1000000" type="number" ng-model="increment">
+									<button ng-click="add(achievement, increment)">Add</button>
 								</div>
 							</div>
 						</div>
@@ -100,11 +106,9 @@
 						<h4 class="title">{{achievement.Title}}</h4>
 						<p class="description">{{achievement.Description}}</p>
 
-						<div class="progress">
-							<div class="progress-bar" role="progressbar" aria-valuenow="{{acheivement.Current}}" aria-valuemin="0" aria-valuemax="{{achievement.Total}}" style="width: 100%";>
-						    {{achievement.Total}} / {{achievement.Total}}
-					  		</div>
-						</div>
+                        <progressbar max="achievement.Total" value="achievement.Total">
+                            <span style="color:white; white-space:nowrap;">{{achievement.Total}} / {{achievement.Total}}</span>
+                        </progressbar>
 
 					</div>
 				</div>
@@ -113,11 +117,29 @@
 		</div>
 
 
+        <script type="text/ng-template" id="unlockedAchievement.html" ng-controller="UnlockedAchievementController">
+            <div class="modal-header">
+                <h3 class="modal-title">You unlocked '{{achievement.Title}}'!</h3>
+            </div>
+            <div class="modal-body">
+                  <h4>{{achievement.Title}}</h4>
+                  <p>{{achievement.Description}}</p>
+                  <progressbar max="achievement.Total" value="achievement.Total">
+                    <span style="color:white; white-space:nowrap;">{{achievement.Total}} / {{achievement.Total}}</span>
+                  </progressbar> 
+                  <div class="pointsGained">+{{achievement.Points}} Points</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="close()">Close</button>
+            </div>
+        </script>
+
 		<script src="Scripts/angular-1.2.28.min.js"></script>
         <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
         <script src="Scripts/Controllers/AchievementController.js"></script>
         <script src="Scripts/Controllers/CreateAchievementController.js"></script>
-		<script src="Scripts/Factories/AchievementFactory.js"></script>
+		<script src="Scripts/Controllers/UnlockedAchievementController.js"></script>
+        <script src="Scripts/Factories/AchievementFactory.js"></script>
 		<script src="Scripts/App.js"></script>
 	</body>
 

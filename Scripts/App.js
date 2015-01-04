@@ -1,3 +1,6 @@
-var app = angular.module('AchieveApp', []);
+var app = angular.module('AchieveApp', ['ui.bootstrap']);
 
 app.controller('AchievementController', AchievementController);
+app.controller('CreateAchievementController', CreateAchievementController);
+app.controller('ModalInstanceCtrl', ModalInstanceCtrl);
+app.factory('AchievementFactory', AchievementFactory);

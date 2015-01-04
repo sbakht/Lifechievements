@@ -3,33 +3,93 @@
 	<head>
 		<title>Achieve Your Life</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<script src="Scripts/bootstrap.min.js"></script>
 		<style type="text/css">
-			.col {
-				border: 1px solid;
+
+			body {
+				background-color: #F2DACE;
 			}
+			.col {
+				border: 0px solid ;
+				border-radius: 10px;
+				box-shadow: 5px 5px 5px #888888;	
+				background-color: #ACACAC;
+			}
+			.clearfix:after {
+			  content:"";
+			  clear:both;
+			  display:block;
+			}
+
+			h3 {
+				margin-top: 20px;
+				margin-bottom: 20px;
+				text-align: center;
+			}
+
+            .header{
+                text-align: center;
+            }
+			.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 		</style>
 	</head>
 
-	<body ng-controller="AchievementController">
+	<body>
 
-		<div class="container">
-			<div class="col-mid-5 col-md-offset-4">
+		<div class="container" ng-controller="AchievementController">
+			<div class="header">
 				<h1>Start Achieving!</h1>
+                <div ng-controller="CreateAchievementController">
+                    <script type="text/ng-template" id="createAchievement.html">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Create An Achievement</h3>
+                        </div>
+                        <form ng-submit="createAchievement(form)">
+                            <div class="modal-body">
+                                    <label>Title:</label>
+                                    <input type="text" ng-model="form.Title" required />
+                                    <br>
+                                    <label>Description:</label>
+                                    <input type="text" ng-model="form.Description" required />
+                                    <br>
+                                    <label>Goal Amount(1-1,000,000):</label>
+                                    <input type="number" ng-model="form.Total" ng-min="1" ng-max="1000000" required />
+                                    <br>
+                                    <label>Points(0-100):</label>
+                                    <input type="number" ng-model="form.Points" ng-min="0" ng-max="100" required/>
+                                    <br>
+                                    
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit">OK</button>
+                                <a class="btn btn-warning" ng-click="cancel()">Cancel</a>
+                            </div>
+                    </script>
+
+                    <button class="btn btn-success" ng-click="open()">Create Achievement</button>
+                </div>
 			</div>
 
 			<div class="row">
 
 				<div class="col-md-5 col">				
 					<h3>Locked</h3>
-					<div class="achievement" ng-if="achievement.Current < achievement.Total" ng-repeat="achievement in achievements">
-						<h4 class="title">{{achievement.Title}}</h4>
-						<p class="description">{{achievement.Description}}</p>
+					<div class="row">
 						
-						<div class="progress">
-							<div class="progress-bar" role="progressbar" aria-valuenow="{{acheivement.Current}}" aria-valuemin="0" aria-valuemax="{{achievement.Total}}" style="width: {{achievement.Current / achievement.Total * 100}}%";>
-						    {{achievement.Current}} / {{achievement.Total}}
-					  		</div>
+						<div class="achievement" ng-if="achievement.Current < achievement.Total" ng-repeat="achievement in achievements">
+							<div class="col-md-12 clearfix">	
+								<h4 class="title">{{achievement.Title}}</h4>
+								<p class="description">{{achievement.Description}}</p>
+
+								<div class="progress" style="float:left;width:50%">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{acheivement.Current}}" aria-valuemin="0" aria-valuemax="{{achievement.Total}}" style="width: {{achievement.Current / achievement.Total * 100}}%;border:none";>
+								    {{achievement.Current}} / {{achievement.Total}}
+							  		</div>
+								</div>
+								<div style="display:block">
+									<input style="width:25%;margin-left:5px;" type="number" ng-model="increment" placeholder="1">
+									<button style="width:15%;" ng-click="achievement.Current = achievement.Current + increment">Add</button>
+								</div>
+							</div>
 						</div>
 
 					</div>
@@ -42,8 +102,8 @@
 						<p class="description">{{achievement.Description}}</p>
 
 						<div class="progress">
-							<div class="progress-bar" role="progressbar" aria-valuenow="{{acheivement.Current}}" aria-valuemin="0" aria-valuemax="{{achievement.Total}}" style="width: {{achievement.Current / achievement.Total * 100}}%";>
-						    {{achievement.Current}} / {{achievement.Total}}
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{acheivement.Current}}" aria-valuemin="0" aria-valuemax="{{achievement.Total}}" style="width: 100%";>
+						    {{achievement.Total}} / {{achievement.Total}}
 					  		</div>
 						</div>
 
@@ -53,8 +113,12 @@
 			</div>
 		</div>
 
-		<script src="Scripts/angular.min.js"></script>
-		<script src="Scripts/Controllers/AchievementController.js"></script>
+
+		<script src="Scripts/angular-1.2.28.min.js"></script>
+        <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+        <script src="Scripts/Controllers/AchievementController.js"></script>
+        <script src="Scripts/Controllers/CreateAchievementController.js"></script>
+		<script src="Scripts/Factories/AchievementFactory.js"></script>
 		<script src="Scripts/App.js"></script>
 	</body>
 

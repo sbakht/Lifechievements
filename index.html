@@ -76,15 +76,14 @@
 					<div class="row">
 						
 						<div class="achievement" ng-if="achievement.Current < achievement.Total" ng-repeat="achievement in achievements">
-							<div class="col-md-12 clearfix">	
+							<div class="col-md-12 clearfix">
 								<h4 class="title">{{achievement.Title}}</h4>
 								<p class="description">{{achievement.Description}}</p>
 
-								<div class="progress" style="float:left;width:50%">
-									<div class="progress-bar" role="progressbar" aria-valuenow="{{acheivement.Current}}" aria-valuemin="0" aria-valuemax="{{achievement.Total}}" style="width: {{achievement.Current / achievement.Total * 100}}%;border:none";>
-								    {{achievement.Current}} / {{achievement.Total}}
-							  		</div>
-								</div>
+                                <progressbar style="float:left;width:50%" max="achievement.Total" value="achievement.Current">
+                                    <span style="color:black; white-space:nowrap;">{{achievement.Current}} / {{achievement.Total}}</span>
+                                </progressbar>
+
 								<div style="display:block">
 									<input style="width:12%;margin-left:5px;" min="1" max="1000000" type="number" ng-model="increment" placeholder="1">
 									<button ng-click="achievement.Current = achievement.Current + increment">Add</button>

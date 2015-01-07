@@ -1,6 +1,18 @@
-var CreateAchievementController = function ($scope, $modal, AchievementFactory) {
+var CreateAchievementController = function ($scope, $modal, AchievementFactory, $log, ordersService, SaveToDatabaseService) {
 
-	$scope.achievements = AchievementFactory.getAchievementList();
+	// $scope.achievements = AchievementFactory.getAchievementList();
+
+  $scope.testorder = function() {
+  ordersService.getOrders().then(function (results) {
+
+      $scope.achievements = results;
+      // $log.info($scope.achievements[0].current + " + hi from CreateAchievementController");
+      // AchievementFactory.setAchievementList($scope.achievements);
+
+  }, function (error) {
+      alert(error.data.message);
+  });
+  }
 
 
   $scope.open = function (size) {
@@ -17,7 +29,11 @@ var CreateAchievementController = function ($scope, $modal, AchievementFactory) 
     });
 
     modalInstance.result.then(function (form) {
-      $scope.achievements.push({ Title : form.Title, Description : form.Description, Current : 0, Total : form.Total, Points : form.Points});
+      $scope.achievements = AchievementFactory.getAchievementList();
+      // $log.info($scope.achievements[0].current + " + hi from result");
+      $scope.achievements.push({ title : form.Title, description : form.Description, current : 0, goal : form.Goal, Points : form.Points});
+      // AchievementFactory.setAchievementList($scope.achievements);
+      SaveToDatabaseService.save($scope.achievements);
     });
   };
 };

@@ -41,6 +41,27 @@
 
 	<body>
 
+    <div class="navbar navbar-inverse" role="navigation" data-ng-controller="IndexController">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </button>
+                <a class="navbar-brand" href="#/">Home</a>
+            </div>
+            <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
+                <ul class="nav navbar-nav navbar-right">
+                    <li data-ng-hide="!authentication.isAuth"><a href="#">Welcome {{authentication.userName}}</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="#/orders">My Orders</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="#/refresh">Refresh Token</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
+                    <li data-ng-hide="authentication.isAuth" ng-controller="LoginController"> <a ng-click="open()">Login</a></li>
+                    <li data-ng-hide="authentication.isAuth" ng-controller="SignupController"> <a ng-click="open()">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 		<div class="container" ng-controller="AchievementController">
 			<div class="header">
 				<h1>Start Achieving!</h1>
@@ -51,6 +72,10 @@
                         </div>
                         <form ng-submit="createAchievement(form)">
                             <div class="modal-body">
+                                    {{form.Title = "blah blah blah"}}
+                                    {{form.Description = "blah blah blah"}}
+                                    {{form.Goal = 5}}
+                                    {{form.Points = 2}}
                                     <label>Title:</label>
                                     <input type="text" ng-model="form.Title" required />
                                     <br>
@@ -58,12 +83,11 @@
                                     <input type="text" ng-model="form.Description" required />
                                     <br>
                                     <label>Goal Amount:</label>
-                                    <input type="number" ng-model="form.Total" min="1" max="1000000" required />
+                                    <input type="number" ng-model="form.Goal" min="1" max="1000000" required />
                                     <br>
                                     <label>Points:</label>
                                     <input type="number" ng-model="form.Points" min="0" max="100" required/>
-                                    <br>
-                                    
+                                    <br>          
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-primary" type="submit">OK</button>
@@ -80,14 +104,14 @@
 				<div class="col-md-5 col">				
 					<h3>Locked</h3>
 					<div class="row">
-						
-						<div class="achievement" ng-if="achievement.Current < achievement.Total" ng-repeat="achievement in achievements">
-							<div class="col-md-12 clearfix">
-								<h4 class="title">{{achievement.Title}}</h4>
-								<p class="description">{{achievement.Description}}</p>
+						<div class="achievement" ng-if="achievement.current < achievement.goal" ng-repeat="achievement in achievements">
 
-                                <progressbar style="float:left;width:50%" max="achievement.Total" value="achievement.Current">
-                                    <span style="color:black; white-space:nowrap;">{{achievement.Current}} / {{achievement.Total}}</span>
+							<div class="col-md-12 clearfix">
+								<h4 class="title">{{achievement.title}}</h4>
+								<p class="description">{{achievement.description}}</p>
+
+                                <progressbar style="float:left;width:50%" max="achievement.goal" value="achievement.current">
+                                    <span style="color:black; white-space:nowrap;">{{achievement.current}} / {{achievement.goal}}</span>
                                 </progressbar>
 
 								<div style="display:block">
@@ -102,12 +126,12 @@
 
 				<div class="col-md-5 col-md-offset-2 col">
 					<h3>Achieved</h3>
-					<div class="achievement" ng-if="achievement.Current >= achievement.Total" ng-repeat="achievement in achievements">
-						<h4 class="title">{{achievement.Title}}</h4>
-						<p class="description">{{achievement.Description}}</p>
+					<div class="achievement" ng-if="achievement.current >= achievement.goal" ng-repeat="achievement in achievements">
+						<h4 class="title">{{achievement.title}}</h4>
+						<p class="description">{{achievement.description}}</p>
 
-                        <progressbar max="achievement.Total" value="achievement.Total">
-                            <span style="color:white; white-space:nowrap;">{{achievement.Total}} / {{achievement.Total}}</span>
+                        <progressbar max="achievement.goal" value="achievement.goal">
+                            <span style="color:white; white-space:nowrap;">{{achievement.goal}} / {{achievement.goal}}</span>
                         </progressbar>
 
 					</div>
@@ -117,28 +141,73 @@
 		</div>
 
 
-        <script type="text/ng-template" id="unlockedAchievement.html" ng-controller="UnlockedAchievementController">
+        <script type="text/ng-template" id="unlockedAchievement.html">
             <div class="modal-header">
-                <h3 class="modal-title">You unlocked '{{achievement.Title}}'!</h3>
+                <h3 class="modal-title">You unlocked '{{achievement.title}}'!</h3>
             </div>
             <div class="modal-body">
-                  <h4>{{achievement.Title}}</h4>
-                  <p>{{achievement.Description}}</p>
-                  <progressbar max="achievement.Total" value="achievement.Total">
-                    <span style="color:white; white-space:nowrap;">{{achievement.Total}} / {{achievement.Total}}</span>
+                  <h4>{{achievement.title}}</h4>
+                  <p>{{achievement.description}}</p>
+                  <progressbar max="achievement.goal" value="achievement.goal">
+                    <span style="color:white; white-space:nowrap;">{{achievement.goal}} / {{achievement.goal}}</span>
                   </progressbar> 
-                  <div class="pointsGained">+{{achievement.Points}} Points</div>
+                  <div class="pointsGained">+{{achievement.points}} Points</div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" ng-click="close()">Close</button>
             </div>
         </script>
 
+        <script type="text/ng-template" id="signup.html">
+        		<form class="form-login" data-ng-submit="signUp()">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Sign Up</h3>
+                    </div>
+                    <div class="modal-body">
+            		    <input type="text" class="form-control" placeholder="Username" data-ng-model="registration.userName" required autofocus>
+            		    <input type="password" class="form-control" placeholder="Password" data-ng-model="registration.password" required>
+            		    <input type="password" class="form-control" placeholder="Confirm Password" data-ng-model="registration.confirmPassword" required>
+            		    <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+            		        {{message}}
+            		    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div ng-show="!accountCreated">
+                            <button class="btn btn-primary" type="submit">Create Account</button>
+                            <a class="btn btn-warning" ng-click="cancel()">Cancel</a>
+                        </div>
+                        <div style="text-align:center;" ng-show="accountCreated">
+                            <a class="btn btn-lg btn-warning" ng-click="cancel()">Close</a>
+                        </div>
+                    </div>
+                </form>
+        </script>
+
+        <script type="text/ng-template" id="login.html">
+    		<form class="form-login" data-ng-submit="login()">
+                <div class="modal-header">
+                    <h3 class="modal-title">Login</h3>
+                </div>
+                <div class="modal-body">
+        		    <input type="text" class="form-control" placeholder="Username" data-ng-model="loginData.userName" required autofocus>
+        		    <input type="password" class="form-control" placeholder="Password" data-ng-model="loginData.password" required>
+                        <button class="btn btn-lg btn-info btn-block" type="submit">Login</button>
+                     <div data-ng-hide="message == ''" class="alert alert-danger">
+                        {{message}}
+                    </div>
+                </div>
+    		</form>
+        </script>
+
+
 		<script src="Scripts/angular-1.2.28.min.js"></script>
+		<script src="Scripts/angular-local-storage.min.js"></script>
         <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
         <script src="Scripts/Controllers/AchievementController.js"></script>
         <script src="Scripts/Controllers/CreateAchievementController.js"></script>
 		<script src="Scripts/Controllers/UnlockedAchievementController.js"></script>
+        <script src="Scripts/Controllers/SignupController.js"></script>
+        <script src="Scripts/Controllers/LoginController.js"></script>
         <script src="Scripts/Factories/AchievementFactory.js"></script>
 		<script src="Scripts/App.js"></script>
 	</body>

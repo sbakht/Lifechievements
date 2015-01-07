@@ -1,6 +1,21 @@
-var AchievementController = function ($rootScope, $scope, AchievementFactory) {
+var AchievementController = function ($rootScope, $scope, ordersService, AchievementFactory, $log, SaveToDatabaseService) {
 
-    $scope.achievements = AchievementFactory.getAchievementList();
+    // $scope.achievements = AchievementFactory.getAchievementList();
+    $log.info("hi from achievementcontroller");
+    // $scope.achievements = [];
+
+    ordersService.getOrders().then(function (results) {
+
+        $scope.achievements = results;
+        $log.info($scope.achievements + " + hi from AchievementController");
+        $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList before setting");
+        AchievementFactory.setAchievementList($scope.achievements);
+        $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList after setting");
+
+    }, function (error) {
+        alert(error.data.message);
+    });
+
 
     $scope.increment = 1;
 
@@ -8,12 +23,13 @@ var AchievementController = function ($rootScope, $scope, AchievementFactory) {
     $scope.unlockedAchievement = AchievementFactory.getUnlockedAchievement();
 
     $scope.add = function (achievement, increment) {
-        achievement.Current = achievement.Current + increment;
-        if(achievement.Current >= achievement.Total) {
+        achievement.current = achievement.current + increment;
+        if(achievement.current >= achievement.goal) {
             $scope.unlockedAchievement = achievement;
             $scope.unlockedAchievementBool = true;
             AchievementFactory.setUnlockedAchievement(achievement);
             $rootScope.$broadcast('UnlockedAchievementBroadcast');
+            SaveToDatabaseService.save($scope.achievements);
         }else{
             $scope.unlockedAchievement = {};
             $scope.unlockedAchievementBool = false;
@@ -23,4 +39,4 @@ var AchievementController = function ($rootScope, $scope, AchievementFactory) {
 
   };
 
-AchievementController.$inject = ['$rootScope', '$scope', 'AchievementFactory'];
+AchievementController.$inject = ['$rootScope', '$scope', 'ordersService','AchievementFactory', '$log', 'SaveToDatabaseService'];

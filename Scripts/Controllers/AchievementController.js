@@ -29,12 +29,12 @@ var AchievementController = function ($rootScope, $scope, ordersService, Achieve
             $scope.unlockedAchievementBool = true;
             AchievementFactory.setUnlockedAchievement(achievement);
             $rootScope.$broadcast('UnlockedAchievementBroadcast');
-            SaveToDatabaseService.save($scope.achievements);
         }else{
             $scope.unlockedAchievement = {};
             $scope.unlockedAchievementBool = false;
             AchievementFactory.setUnlockedAchievement({});
         }
+        SaveToDatabaseService.save(achievement);
     }
 
   };

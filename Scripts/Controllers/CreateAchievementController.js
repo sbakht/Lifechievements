@@ -31,9 +31,25 @@ var CreateAchievementController = function ($scope, $modal, AchievementFactory, 
     modalInstance.result.then(function (form) {
       $scope.achievements = AchievementFactory.getAchievementList();
       // $log.info($scope.achievements[0].current + " + hi from result");
-      $scope.achievements.push({ title : form.Title, description : form.Description, current : 0, goal : form.Goal, Points : form.Points});
+      var newAchievement = { title : form.Title, description : form.Description, current : 0, goal : form.Goal, Points : form.Points};
+      $scope.achievements.push(newAchievement);
       // AchievementFactory.setAchievementList($scope.achievements);
-      SaveToDatabaseService.save($scope.achievements);
+      SaveToDatabaseService.save(newAchievement);
+
+      ordersService.getOrders().then(function (results) {
+
+          $scope.achievements = results;
+          $log.info("hi from modalinstance result")
+          // $log.info($scope.achievements + " + hi from AchievementController");
+          // $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList before setting");
+          // AchievementFactory.setAchievementList($scope.achievements);
+          // $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList after setting");
+
+      }, function (error) {
+          alert(error.data.message);
+      });
+
+
     });
   };
 };

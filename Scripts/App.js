@@ -1,4 +1,4 @@
-var app = angular.module('AchieveApp', ['ui.bootstrap', 'LocalStorageModule']);
+var app = angular.module('AchieveApp', ['ui.bootstrap', 'LocalStorageModule', 'ngRoute']);
 
 app.controller('AchievementController', AchievementController);
 app.controller('CreateAchievementController', CreateAchievementController);
@@ -10,6 +10,21 @@ app.controller('SignupModalInstanceController', SignupModalInstanceController);
 app.controller('LoginController', LoginController);
 app.controller('LoginModalInstanceController', LoginModalInstanceController);
 app.factory('AchievementFactory', AchievementFactory);
+
+// app.config(['$routeProvider',
+// function($routeProvider) {
+//     $routeProvider.when("/",{
+//         templateUrl: "home.html",
+//         controller:"HomeController"
+//     });    $routeProvider.when("/Account",{
+//         templateUrl: "account.html",
+//         // controller:"animalController"
+//     });
+//     $routeProvider.when("/Home",{
+//         templateUrl: "home.html",
+//         // controller: "birdController"
+//     });     
+// }]);
 
 app.factory('authService', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
  
@@ -173,13 +188,18 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
 });
 
-app.controller('IndexController', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
- 
-    $scope.logOut = function () {
-        authService.logOut();
-        $location.path('/home');
-    }
+app.controller('IndexController', ['$scope', '$location', 'AchievementFactory', 'authService', function ($scope, $location, AchievementFactory, authService) {
  
     $scope.authentication = authService.authentication;
+
+    if($scope.authentication.isAuth) {
+        $location.path('Account');
+    }
+
+    $scope.logOut = function () {
+        authService.logOut();
+        // $location.path(''); //send to index? MIGHT HAVE TO CHANGE
+    }
+ 
  
 }]);

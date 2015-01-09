@@ -19,7 +19,7 @@ var AchievementFactory = function() {
     //   ];
     var achievements = [];
 
- 	var unlockedAchievement = {};
+    var unlockedAchievement = {};
 
     function getAchievementList() {
     	return achievements;

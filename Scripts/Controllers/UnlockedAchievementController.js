@@ -1,14 +1,16 @@
-var UnlockedAchievementController = function ($scope, $modal) {
+var UnlockedAchievementController = function ($scope, $modal, AchievementFactory, $log) {
 
-  $scope.$on('UnlockedAchievementBroadcast', function () {
-    var modalInstance = $modal.open({
-      templateUrl: 'unlockedAchievement.html',
-      controller: 'UnlockedAchievementModalInstanceController',
-    });
+  $scope.$watch(function () { return AchievementFactory.getUnlockedAchievement() }, function (value) {
+    if(value.title != null) {
+      var modalInstance = $modal.open({
+        templateUrl: 'unlockedAchievement.html',
+        controller: 'UnlockedAchievementModalInstanceController',
+      });
 
-    modalInstance.result.then(function () {
-      $scope.achievement = {};
-    });
+      modalInstance.result.then(function () {
+        $scope.achievement = {};
+      });
+    }
   });
 };
 

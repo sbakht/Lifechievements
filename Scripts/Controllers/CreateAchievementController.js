@@ -1,19 +1,6 @@
-var CreateAchievementController = function ($scope, $modal, AchievementFactory, $log, ordersService, SaveToDatabaseService) {
+var CreateAchievementController = function ($scope, $modal, AchievementFactory, $log, ordersService, SaveToDatabaseService, authService, $route) {
 
 	// $scope.achievements = AchievementFactory.getAchievementList();
-
-  $scope.testorder = function() {
-  ordersService.getOrders().then(function (results) {
-
-      $scope.achievements = results;
-      // $log.info($scope.achievements[0].current + " + hi from CreateAchievementController");
-      // AchievementFactory.setAchievementList($scope.achievements);
-
-  }, function (error) {
-      alert(error.data.message);
-  });
-  }
-
 
   $scope.open = function (size) {
 
@@ -30,25 +17,33 @@ var CreateAchievementController = function ($scope, $modal, AchievementFactory, 
 
     modalInstance.result.then(function (form) {
       $scope.achievements = AchievementFactory.getAchievementList();
-      // $log.info($scope.achievements[0].current + " + hi from result");
       var newAchievement = { title : form.Title, description : form.Description, current : 0, goal : form.Goal, Points : form.Points};
-      $scope.achievements.push(newAchievement);
+      // $scope.achievements.push(newAchievement);
       // AchievementFactory.setAchievementList($scope.achievements);
-      SaveToDatabaseService.save(newAchievement);
+      // $log.info($scope.achievements[0].title + " + hi from result");
+      // $log.info( AchievementFactory.getAchievementList()[0].title + " + hi from result");
+       $log.info(AchievementFactory.getAchievementList().length);
+      if(authService.authentication.isAuth) {
+        SaveToDatabaseService.save(newAchievement);
+        $route.reload();
+        // ordersService.getOrders().then(function (results) {
+        //     $log.info(results.length);
+        //     // $log.info(achievements.length);
+        //     // $scope.achievements = results;
+        //     // $log.info(achievements.length);
+        //     $log.info(AchievementFactory.getAchievementList().length);
+        //     AchievementFactory.setAchievementList(results);
+        //     $log.info(AchievementFactory.getAchievementList().length);
+        //     $log.info("hi from modalinstance result");
+        //     // $log.info($scope.achievements + " + hi from AchievementController");
+        //     // $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList before setting");
+        //     // AchievementFactory.setAchievementList($scope.achievements);
+        //     // $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList after setting");
 
-      ordersService.getOrders().then(function (results) {
-
-          $scope.achievements = results;
-          $log.info("hi from modalinstance result")
-          // $log.info($scope.achievements + " + hi from AchievementController");
-          // $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList before setting");
-          // AchievementFactory.setAchievementList($scope.achievements);
-          // $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList after setting");
-
-      }, function (error) {
-          alert(error.data.message);
-      });
-
+        // }, function (error) {
+        //     alert(error.data.message);
+        // });
+      }
 
     });
   };

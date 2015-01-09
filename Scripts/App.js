@@ -116,6 +116,15 @@ app.factory('ordersService', ['$http', '$q', function ($http, $q) {
 
         return deferred.promise; 
     };
+
+    // var _getOrders = function () {
+ 
+    //     var promise = $http.get(serviceBase + 'api/achievements').then(function (response) {
+    //         return response.data;
+    //     });
+
+    //     return promise; 
+    // };
  
     ordersServiceFactory.getOrders = _getOrders;
  

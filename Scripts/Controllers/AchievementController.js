@@ -1,42 +1,48 @@
-var AchievementController = function ($rootScope, $scope, ordersService, AchievementFactory, $log, SaveToDatabaseService) {
+var AchievementController = function ($rootScope, $scope, ordersService, AchievementFactory, $log, SaveToDatabaseService, authService) {
 
-    // $scope.achievements = AchievementFactory.getAchievementList();
+    $scope.achievements = AchievementFactory.getAchievementList();
     $log.info("hi from achievementcontroller");
+
     // $scope.achievements = [];
 
-    ordersService.getOrders().then(function (results) {
+      // $scope.$watch(function () {
+      //   return AchievementFactory.getAchievementList();
+      //   }, function (value)
+      // {
+      //   $log.info('WATCH');
+      //   $scope.achievements = value;
+      //   $log.info(value);
+      //   $log.info($scope.achievements);
+      // })
 
-        $scope.achievements = results;
-        $log.info($scope.achievements + " + hi from AchievementController");
-        $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList before setting");
-        AchievementFactory.setAchievementList($scope.achievements);
-        $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList after setting");
 
-    }, function (error) {
-        alert(error.data.message);
-    });
+    if(authService.authentication.isAuth) {
+        ordersService.getOrders().then(function (results) {
 
+            $scope.achievements = results;
+            $log.info($scope.achievements + " + hi from AchievementController");
+            $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList before setting");
+            AchievementFactory.setAchievementList($scope.achievements);
+            $log.info(AchievementFactory.getAchievementList() + " + AchievementController getAchievementList after setting");
+
+        }, function (error) {
+            alert(error.data.message);
+        });
+    }
 
     $scope.increment = 1;
-
-    $scope.unlockedAchievementBool = false;
-    $scope.unlockedAchievement = AchievementFactory.getUnlockedAchievement();
 
     $scope.add = function (achievement, increment) {
         achievement.current = achievement.current + increment;
         if(achievement.current >= achievement.goal) {
-            $scope.unlockedAchievement = achievement;
-            $scope.unlockedAchievementBool = true;
             AchievementFactory.setUnlockedAchievement(achievement);
-            $rootScope.$broadcast('UnlockedAchievementBroadcast');
-        }else{
-            $scope.unlockedAchievement = {};
-            $scope.unlockedAchievementBool = false;
-            AchievementFactory.setUnlockedAchievement({});
         }
-        SaveToDatabaseService.save(achievement);
+
+        if(authService.authentication.isAuth) {
+            SaveToDatabaseService.save(achievement);
+        }
     }
 
   };
 
-AchievementController.$inject = ['$rootScope', '$scope', 'ordersService','AchievementFactory', '$log', 'SaveToDatabaseService'];
+AchievementController.$inject = ['$rootScope', '$scope', 'ordersService','AchievementFactory', '$log', 'SaveToDatabaseService','authService'];

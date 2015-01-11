@@ -62,8 +62,10 @@ angular.module('achieveYourLifeApp')
           $scope.alertMsg = error + '';
           $scope.signup();
         }else {
-          $scope.alertMsg = 'Account Successfully Created. You may now login.';
-          $scope.login();
+          // $scope.alertMsg = 'Account Successfully Created. You may now login.';
+          // $scope.login();
+          console.log('pls work');
+          $location.path('/account');
         }
       }, function () {
         $scope.alertMsg = '';
@@ -116,7 +118,7 @@ angular.module('achieveYourLifeApp')
 });
 
 angular.module('achieveYourLifeApp')
-  .controller('SignupModalInstanceCtrl', function ($scope, $modalInstance, alertMsg) {
+  .controller('SignupModalInstanceCtrl', function ($scope, $modalInstance, alertMsg, $location) {
  
     $scope.registration = {
         userName: '',
@@ -136,7 +138,21 @@ angular.module('achieveYourLifeApp')
           if (error) {
             $modalInstance.close(error);
           } else {
-            $modalInstance.close();
+            // $modalInstance.dismiss();
+            ref.authWithPassword({
+              email    : $scope.registration.userName,
+              password : $scope.registration.password
+            }, function(error, authData) {
+              if (error) {
+                $modalInstance.close(error);
+              } else {
+                console.log('no error');
+                $modalInstance.close();
+              }
+            });
+
+                console.log('before close');
+                // $modalInstance.close();
           }
         });
     };

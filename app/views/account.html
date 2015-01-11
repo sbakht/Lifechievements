@@ -1,0 +1,48 @@
+<div style="padding-bottom:100px">
+	<div class="header">
+		<h1>Start Achieving!</h1>
+        <div>
+            <button class="btn btn-success" ng-click="open()">Create Achievement</button>
+        </div>
+	</div>
+
+	<div class="row">
+
+		<div class="col-md-5 col">				
+			<h3>Locked</h3>
+			<div class="row">
+				<div class="achievement" ng-if="achievement.current < achievement.goal" ng-repeat="achievement in achievements">
+
+					<div class="col-md-12 clearfix">
+						<h4 class="title">{{achievement.title}}</h4>
+						<p class="description">{{achievement.description}}</p>
+
+                        <progressbar style="float:left;width:50%" max="achievement.goal" value="achievement.current">
+                            <span style="color:black; white-space:nowrap;">{{achievement.current}} / {{achievement.goal}}</span>
+                        </progressbar>
+
+						<div style="display:block">
+							<input style="width:12%;margin-left:5px;" min="1" max="1000000" type="number" ng-model="increment">
+							<button ng-click="add(achievement, increment)">Add</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="col-md-5 col-md-offset-2 col">
+			<h3>Achieved</h3>
+			<div class="achievement" ng-if="achievement.current >= achievement.goal" ng-repeat="achievement in achievements">
+				<h4 class="title">{{achievement.title}}</h4>
+				<p class="description">{{achievement.description}}</p>
+
+                <progressbar max="achievement.goal" value="achievement.goal">
+                    <span style="color:white; white-space:nowrap;">{{achievement.goal}} / {{achievement.goal}}</span>
+                </progressbar>
+
+			</div>
+		</div>
+
+	</div>
+</div>

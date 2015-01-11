@@ -1,0 +1,17 @@
+<form class="form-login" data-ng-submit="signUp()">
+    <div class="modal-header">
+        <h3 class="modal-title">Sign Up</h3>
+        <alert ng-if="message" type="success">{{message}}</alert>
+    </div>
+    <div class="modal-body">
+    <input type="text" class="form-control" placeholder="Email" data-ng-model="registration.userName" required autofocus>
+    <input type="password" class="form-control" placeholder="Password" data-ng-model="registration.password" required>
+    <input type="password" class="form-control" placeholder="Confirm Password" data-ng-model="registration.confirmPassword" required>
+    </div>
+    <div class="modal-footer">
+        <div>
+            <button class="btn btn-primary" type="submit">Create Account</button>
+            <a class="btn btn-warning" ng-click="cancel()">Cancel</a>
+        </div>
+    </div>
+</form>

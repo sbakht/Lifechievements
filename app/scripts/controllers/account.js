@@ -64,7 +64,6 @@ angular.module('achieveYourLifeApp')
         }else {
           // $scope.alertMsg = 'Account Successfully Created. You may now login.';
           // $scope.login();
-          console.log('pls work');
           $location.path('/account');
         }
       }, function () {
@@ -146,13 +145,9 @@ angular.module('achieveYourLifeApp')
               if (error) {
                 $modalInstance.close(error);
               } else {
-                console.log('no error');
                 $modalInstance.close();
               }
             });
-
-                console.log('before close');
-                // $modalInstance.close();
           }
         });
     };

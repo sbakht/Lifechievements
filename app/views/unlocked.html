@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h3 class="modal-title">You unlocked '{{achievement.title}}'!</h3>
+</div>
+<div class="modal-body">
+      <h4>{{achievement.title}}</h4>
+      <p>{{achievement.description}}</p>
+      <progressbar max="achievement.goal" value="achievement.goal">
+        <span style="color:white; white-space:nowrap;">{{achievement.goal}} / {{achievement.goal}}</span>
+      </progressbar> 
+      <div class="pointsGained">+{{achievement.points}} Points</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="close()">Close</button>
+</div>

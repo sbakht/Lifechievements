@@ -36,7 +36,7 @@ angular.module('achieveYourLifeApp')
     $scope.add = function (achievement, increment) {
         achievement.current = achievement.current + increment;
         if(achievement.current >= achievement.goal) {
-            // AchievementFactory.setUnlockedAchievement(achievement);
+          $scope.$broadcast('unlockedBroadcast', achievement);
         }
 
         if(authData) {

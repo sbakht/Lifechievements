@@ -8,7 +8,7 @@
  * Controller of the achieveYourLifeApp
  */
 angular.module('achieveYourLifeApp')
-  .controller('AccountCtrl', function ($scope, $modal, $location) {
+  .controller('AccountCtrl', function($scope, $modal, $location) {
 
     var ref;
 
@@ -17,7 +17,7 @@ angular.module('achieveYourLifeApp')
       ref.onAuth($scope.onAuthChanged);
     };
 
-    $scope.login = function (size) {
+    $scope.login = function(size) {
 
       var modalInstance = $modal.open({
         templateUrl: 'views/login.html',
@@ -25,25 +25,25 @@ angular.module('achieveYourLifeApp')
         size: size,
         backdrop: true,
         resolve: {
-          alertMsg: function () {
+          alertMsg: function() {
             return $scope.alertMsg;
           }
         }
       });
 
-      modalInstance.result.then(function (error) {
-        if(error) {
+      modalInstance.result.then(function(error) {
+        if (error) {
           $scope.alertMsg = error + ''; //need the "" to make error show as string output
           $scope.login();
-        }else{
+        } else {
           $location.path('/account');
         }
-      }, function () {
+      }, function() {
         $scope.alertMsg = '';
       });
     };
 
-    $scope.signup = function (size) {
+    $scope.signup = function(size) {
 
       var modalInstance = $modal.open({
         templateUrl: 'views/signup.html',
@@ -51,22 +51,22 @@ angular.module('achieveYourLifeApp')
         size: size,
         backdrop: true,
         resolve: {
-          alertMsg: function () {
+          alertMsg: function() {
             return $scope.alertMsg;
           }
         }
       });
 
-      modalInstance.result.then(function (error) {
-        if(error) {
+      modalInstance.result.then(function(error) {
+        if (error) {
           $scope.alertMsg = error + '';
           $scope.signup();
-        }else {
+        } else {
           // $scope.alertMsg = 'Account Successfully Created. You may now login.';
           // $scope.login();
           $location.path('/account');
         }
-      }, function () {
+      }, function() {
         $scope.alertMsg = '';
       });
     };
@@ -86,73 +86,73 @@ angular.module('achieveYourLifeApp')
   });
 
 angular.module('achieveYourLifeApp')
-  .controller('LoginModalInstanceCtrl', function ($scope, $modalInstance, alertMsg) {
+  .controller('LoginModalInstanceCtrl', function($scope, $modalInstance, alertMsg) {
 
     $scope.loginData = {
-        userName: '',
-        password: ''
+      userName: '',
+      password: ''
     };
- 
+
     $scope.message = alertMsg;
- 
-    $scope.login = function () {
-        var ref = new Firebase('https://glowing-torch-9570.firebaseio.com');
 
-        ref.authWithPassword({
-          email    : $scope.loginData.userName,
-          password : $scope.loginData.password
-        }, function(error, authData) {
-          if (error) {
-            $modalInstance.close(error);
-          } else {
-            $modalInstance.close();
-          }
-        });
+    $scope.login = function() {
+      var ref = new Firebase('https://glowing-torch-9570.firebaseio.com');
+
+      ref.authWithPassword({
+        email: $scope.loginData.userName,
+        password: $scope.loginData.password
+      }, function(error, authData) {
+        if (error) {
+          $modalInstance.close(error);
+        } else {
+          $modalInstance.close();
+        }
+      });
 
     };
 
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
-});
+    $scope.cancel = function() {
+      $modalInstance.dismiss('cancel');
+    };
+  });
 
 angular.module('achieveYourLifeApp')
-  .controller('SignupModalInstanceCtrl', function ($scope, $modalInstance, alertMsg, $location) {
- 
+  .controller('SignupModalInstanceCtrl', function($scope, $modalInstance, $location, alertMsg) {
+
     $scope.registration = {
-        userName: '',
-        password: '',
-        confirmPassword: ''
+      userName: '',
+      password: '',
+      confirmPassword: ''
     };
 
     $scope.message = alertMsg;
- 
-    $scope.signUp = function () {
 
-        var ref = new Firebase("https://glowing-torch-9570.firebaseio.com");
-        ref.createUser({
-          email    : $scope.registration.userName,
-          password : $scope.registration.password
-        }, function(error) {
-          if (error) {
-            $modalInstance.close(error);
-          } else {
-            // $modalInstance.dismiss();
-            ref.authWithPassword({
-              email    : $scope.registration.userName,
-              password : $scope.registration.password
-            }, function(error, authData) {
-              if (error) {
-                $modalInstance.close(error);
-              } else {
-                $modalInstance.close();
-              }
-            });
-          }
-        });
+    $scope.signUp = function() {
+
+      var ref = new Firebase('https://glowing-torch-9570.firebaseio.com');
+      ref.createUser({
+        email: $scope.registration.userName,
+        password: $scope.registration.password
+      }, function(error) {
+        if (error) {
+          $modalInstance.close(error);
+        } else {
+          // $modalInstance.dismiss();
+          ref.authWithPassword({
+            email: $scope.registration.userName,
+            password: $scope.registration.password
+          }, function(error, authData) {
+            if (error) {
+              $modalInstance.close(error);
+            } else {
+              $modalInstance.close();
+            }
+          });
+        }
+      });
     };
 
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
-});
+    $scope.cancel = function() {
+      $modalInstance.dismiss('cancel');
+    };
+  });

@@ -10,8 +10,12 @@
 
 		<div class="col-md-5 col">				
 			<h3>Locked <span class="badge">{{locked.length}}</span></h3>
+			<div class="col-md-12" style="padding-bottom:10px;">
+				<label>Filter :</label>
+				<input type="text" ng-model="searchLocked" style="width:50%">
+			</div>
 			<div class="row">
-				<div class="achievement" ng-repeat="achievement in locked = (achievements | locked)">
+				<div class="achievement" ng-repeat="achievement in locked = (achievements | locked | filter:searchLocked)">
 					
 					<div class="col-md-12 clearfix">
 						<h4 class="title">{{achievement.title}}</h4>
@@ -27,7 +31,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-12 clearfix" ng-if="locked.length == 0">
+				<div class="col-md-12 clearfix" ng-if="locked.length == 0 && !searchLocked">
 					<h5>You have no more achievements to unlock.</h5>
 					<h5>Why not try creating a new one?</h5>
 				</div>
@@ -36,7 +40,11 @@
 
 		<div class="col-md-5 col-md-offset-2 col">
 			<h3>Achieved <span class="badge">{{unlocked.length}}</span></h3>
-			<div class="achievement" ng-repeat="achievement in unlocked = (achievements | unlocked)">
+			<div class="col-md-12" style="padding-bottom:10px;">
+				<label>Filter :</label>
+				<input type="text" ng-model="searchUnlocked" style="width:50%">
+			</div>
+			<div class="achievement" ng-repeat="achievement in unlocked = (achievements | unlocked | filter:searchUnlocked)">
 				<h4 class="title">{{achievement.title}}</h4>
 				<p class="description">{{achievement.description}}</p>
 

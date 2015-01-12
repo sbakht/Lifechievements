@@ -29,4 +29,26 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .filter('locked', function () {
+    return function(achievements) {
+      var filtered = [];
+      for(var i = 0; i < achievements.length; i++) {
+        if(achievements[i].current < achievements[i].goal) {
+          filtered.push(achievements[i]);
+        }       
+      }
+      return filtered;
+    };
+  })
+  .filter('unlocked', function () {
+    return function(achievements) {
+      var filtered = [];
+      for(var i = 0; i < achievements.length; i++) {
+        if(achievements[i].current >= achievements[i].goal) {
+          filtered.push(achievements[i]);
+        }       
+      }
+      return filtered;
+    };
   });

@@ -12,13 +12,10 @@ angular.module('achieveYourLifeApp')
 
   	$scope.init = function() {
     	$scope.increment = 1;
-	    $scope.achievements = [{ title : 'My First Achievement', description : 'Click add 5 times to unlock this achievement!', current : 0, goal : 5, points : 1}];
-
-    	$scope.hasALocked();
+	    $scope.achievements = [{ title : 'My First Achievement', description : 'Click thumbs up 5 times to unlock this achievement!', current : 0, goal : 5, points : 1}];
 
     	$scope.$on('newAchievementBroadcast', function(event, newAchievement) {
       	$scope.achievements.push(newAchievement);
-      	$scope.hasALocked();
     	});
   	}
 
@@ -26,19 +23,8 @@ angular.module('achieveYourLifeApp')
         achievement.current = achievement.current + increment;
         if(achievement.current >= achievement.goal) {
           $scope.$broadcast('unlockedBroadcast', achievement);
-          $scope.hasALocked();
         }
     }
-
-    $scope.hasALocked = function() {
-    	for(var i = 0; i < $scope.achievements.length; ++i) {
-    		if($scope.achievements[i].current < $scope.achievements[i].goal) {
-    			$scope.isLocked = true;
-    			return;
-    		}
-    	}
-    	$scope.isLocked = false;
-    };
 
     $scope.init();
 

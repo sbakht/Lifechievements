@@ -17,7 +17,7 @@ angular.module('achieveYourLifeApp')
       ref = new Firebase('https://glowing-torch-9570.firebaseio.com');
       authData = ref.getAuth();
       if (authData) {
-        var achref = new Firebase('https://glowing-torch-9570.firebaseio.com/users/" + authData.uid  + "/achievements');
+        var achref = new Firebase('https://glowing-torch-9570.firebaseio.com/users/' + authData.uid  + '/achievements');
         var sync = $firebase(achref);
 
         $scope.achievements = sync.$asArray();

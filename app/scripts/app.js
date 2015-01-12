@@ -16,7 +16,6 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/home.html',
-        // controller: 'MainCtrl'
       })
       .when('/demo', {
         templateUrl: 'views/demo.html',
@@ -36,7 +35,7 @@ angular
       for(var i = 0; i < achievements.length; i++) {
         if(achievements[i].current < achievements[i].goal) {
           filtered.push(achievements[i]);
-        }       
+        }
       }
       return filtered;
     };
@@ -47,7 +46,7 @@ angular
       for(var i = 0; i < achievements.length; i++) {
         if(achievements[i].current >= achievements[i].goal) {
           filtered.push(achievements[i]);
-        }       
+        }
       }
       return filtered;
     };

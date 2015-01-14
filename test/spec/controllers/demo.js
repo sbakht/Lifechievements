@@ -16,7 +16,13 @@ describe('Controller: DemoCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    // expect(scope.awesomeThings.length).toBe(3);
+  it('should increment achievement over the goal requirement', function () {
+    scope.add(scope.achievements[0], 6);
+    expect(scope.achievements[0].current).toBe(6);
+  });
+
+  it('should cap at 10 million', function () {
+    scope.add(scope.achievements[0], 999999999999);
+    expect(scope.achievements[0].current).toBe(10000000);
   });
 });

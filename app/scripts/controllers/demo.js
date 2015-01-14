@@ -21,6 +21,9 @@ angular.module('achieveYourLifeApp')
 
     $scope.add = function (achievement, increment) {
         achievement.current = achievement.current + increment;
+        if(achievement.current > 10000000) {
+          achievement.current = 10000000;
+        }
         if(achievement.current >= achievement.goal) {
           $scope.$broadcast('unlockedBroadcast', achievement);
         }

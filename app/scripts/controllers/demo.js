@@ -17,6 +17,12 @@ angular.module('achieveYourLifeApp')
       $scope.$on('newAchievementBroadcast', function(event, newAchievement) {
         $scope.achievements.push(newAchievement);
       });
+
+      $scope.$on('deleteAchievementBroadcast', function(event, achievement) {
+        $scope.achievements = $scope.achievements.filter(function (el) {
+          return el != achievement;
+        });
+      });
     }
 
     $scope.add = function (achievement, increment) {

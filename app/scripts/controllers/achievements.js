@@ -29,6 +29,14 @@ angular.module('achieveYourLifeApp')
         $scope.achievements.$add(newAchievement);
       });
 
+      $scope.$on('deleteAchievementBroadcast', function(event, achievement) {
+        $scope.achievements.$remove(achievement);
+      });
+
+      $scope.$on('editAchievementBroadcast', function(event, achievement) {
+        $scope.save(achievement);
+      });
+
     };
 
     $scope.increment = 1;
@@ -42,6 +50,10 @@ angular.module('achieveYourLifeApp')
         $scope.$broadcast('unlockedBroadcast', achievement);
       }
 
+      $scope.save(achievement);
+    };
+
+    $scope.save = function(achievement) {
       if (authData) {
         $scope.achievements.$save(achievement);
       }

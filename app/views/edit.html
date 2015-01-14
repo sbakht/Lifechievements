@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">Edit '{{achievement.title}}'</h3>
+</div>
+<form ng-submit="editAchievement(form)">
+    <div class="modal-body">
+            <label>Title:</label>
+            <input type="text" ng-model="form.title" required />
+            <br>
+            <label>Description:</label>
+            <input type="text" ng-model="form.description" required />
+            <br>
+            <label>Goal Amount:</label>
+            <input type="number" ng-model="form.goal" min="1" max="10000000" required />
+            <br>          
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-primary" ng-click="delete()">Delete</a>
+        <a class="btn btn-warning" ng-click="cancel()">Cancel</a>
+    </div>
+</form>

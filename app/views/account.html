@@ -18,10 +18,10 @@
 				<div class="achievement" ng-repeat="achievement in locked = (achievements | locked | filter:searchLocked)">
 					
 					<div class="col-md-12 clearfix">
-						<h4 class="title">{{achievement.title}}</h4>
+						<h4 class="title">{{achievement.title}} <a ng-controller="EditCtrl" ng-click="editAchievement(achievement)"><span class="glyphicon glyphicon-pencil"></span></a></h4>
 						<p class="description">{{achievement.description}}</p>
 
-                        <progressbar style="float:left;width:50%" max="achievement.goal" value="achievement.current">
+                        <progressbar style="float:left;width:50%" max="100" value="achievement.current / achievement.goal * 100">
                             <span style="color:black; white-space:nowrap;">{{achievement.current}} / {{achievement.goal}}</span>
                         </progressbar>
 

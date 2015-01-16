@@ -30,7 +30,7 @@ angular.module('achieveYourLifeApp')
       });
 
       $scope.$on('deleteAchievementBroadcast', function(event, achievement) {
-        $scope.achievements.$remove(achievement);
+        $scope.remove(achievement);
       });
 
       $scope.$on('editAchievementBroadcast', function(event, achievement) {
@@ -56,6 +56,12 @@ angular.module('achieveYourLifeApp')
     $scope.save = function(achievement) {
       if (authData) {
         $scope.achievements.$save(achievement);
+      }
+    };
+
+    $scope.remove = function(achievement) {
+      if (authData) {
+        $scope.achievements.$remove(achievement);
       }
     };
 

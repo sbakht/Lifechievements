@@ -45,7 +45,7 @@
 				<input type="text" ng-model="searchUnlocked" style="width:50%">
 			</div>
 			<div class="achievement" ng-repeat="achievement in unlocked = (achievements | unlocked | filter:searchUnlocked)">
-				<h4 class="title">{{achievement.title}}</h4>
+				<h4 class="title">{{achievement.title}} <a ng-click="remove(achievement)"><span class="glyphicon glyphicon-remove"></span></a></h4>
 				<p class="description">{{achievement.description}}</p>
 
                 <progressbar max="achievement.goal" value="achievement.goal">

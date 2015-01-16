@@ -19,11 +19,9 @@ angular.module('achieveYourLifeApp')
       });
 
       $scope.$on('deleteAchievementBroadcast', function(event, achievement) {
-        $scope.achievements = $scope.achievements.filter(function (el) {
-          return el != achievement;
-        });
+        $scope.remove(achievement);
       });
-    }
+    };
 
     $scope.add = function (achievement, increment) {
         achievement.current = achievement.current + increment;
@@ -33,7 +31,13 @@ angular.module('achieveYourLifeApp')
         if(achievement.current >= achievement.goal) {
           $scope.$broadcast('unlockedBroadcast', achievement);
         }
-    }
+    };
+
+    $scope.remove = function(achievement) {
+      $scope.achievements = $scope.achievements.filter(function (el) {
+        return el != achievement;
+      });
+    };
 
     $scope.init();
 

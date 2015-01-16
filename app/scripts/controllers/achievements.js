@@ -14,6 +14,7 @@ angular.module('achieveYourLifeApp')
     var authData;
 
     $scope.init = function() {
+      $scope.title = "Your Account";
       ref = new Firebase('https://glowing-torch-9570.firebaseio.com');
       authData = ref.getAuth();
       if (authData) {

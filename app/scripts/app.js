@@ -18,11 +18,11 @@ angular
         templateUrl: 'views/home.html',
       })
       .when('/demo', {
-        templateUrl: 'views/demo.html',
+        templateUrl: 'views/achievements.html',
         controller: 'DemoCtrl'
       })
       .when('/account', {
-        templateUrl: 'views/account.html',
+        templateUrl: 'views/achievements.html',
         controller: 'AchievementsCtrl'
       })
       .otherwise({

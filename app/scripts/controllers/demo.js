@@ -11,6 +11,7 @@ angular.module('achieveYourLifeApp')
   .controller('DemoCtrl', function ($scope) {
 
     $scope.init = function() {
+      $scope.title = "Demo";
       $scope.increment = 1;
       $scope.achievements = [{ title : 'My First Achievement', description : 'Click thumbs up 5 times to unlock this achievement!', current : 0, goal : 5, points : 1}];
 

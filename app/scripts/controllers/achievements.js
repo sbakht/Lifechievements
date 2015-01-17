@@ -8,20 +8,18 @@
  * Controller of the achieveYourLifeApp
  */
 angular.module('achieveYourLifeApp')
-  .controller('AchievementsCtrl', function($scope, $location, $firebase) {
+  .controller('AchievementsCtrl', function($scope, $location, AchievementsFactory) {
 
-    var ref;
     var authData;
 
     $scope.init = function() {
-      $scope.title = "Your Account";
-      ref = new Firebase('https://glowing-torch-9570.firebaseio.com');
+      $scope.title = 'Your Account';
+      $scope.increment = 1;
+      var baseUrl = 'https://glowing-torch-9570.firebaseio.com';
+      var ref = new Firebase(baseUrl);
       authData = ref.getAuth();
       if (authData) {
-        var achref = new Firebase('https://glowing-torch-9570.firebaseio.com/users/' + authData.uid  + '/achievements');
-        var sync = $firebase(achref);
-
-        $scope.achievements = sync.$asArray();
+        $scope.achievements = AchievementsFactory(authData.uid)
       } else {
         $location.path('/');
       }
@@ -39,8 +37,6 @@ angular.module('achieveYourLifeApp')
       });
 
     };
-
-    $scope.increment = 1;
 
     $scope.add = function(achievement, increment) {
       achievement.current = achievement.current + increment;

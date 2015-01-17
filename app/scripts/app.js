@@ -25,6 +25,10 @@ angular
         templateUrl: 'views/achievements.html',
         controller: 'AchievementsCtrl'
       })
+      .when('/groups', {
+        templateUrl: 'views/groups.html',
+        controller: 'GroupCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

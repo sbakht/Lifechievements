@@ -2,8 +2,14 @@
 
 	<div class="header"><h1>Your Groups</h1></div>
 	<div class="row">
-		<ul ng-repeat="(key,value) in mygroups">
-			<li>{{key}}</li>
+		<ul ng-repeat="(groupName,value) in mygroups">
+			<li>{{groupName}}
+				<ul ng-controller="AchievementsCtrl">
+					<li class="achievement" ng-repeat="achievement in locked = (achievements | locked | filter:searchLocked)">{{achievement.title}} - {{achievement.$id}} <a ng-click="setAchievement(achievement, groupName)">Set for {{groupName}}</a>
+					</li>
+				</ul>
+				<a ng-click="removeAchievement(groupName)">Remove achievement from group</a>
+			</li>
 		</ul>		
 	</div>
 

@@ -19,7 +19,7 @@ angular.module('achieveYourLifeApp')
       var ref = new Firebase(baseUrl);
       authData = ref.getAuth();
       if (authData) {
-        $scope.achievements = AchievementsFactory(authData.uid)
+        $scope.achievements = AchievementsFactory(authData.uid);
       } else {
         $location.path('/');
       }

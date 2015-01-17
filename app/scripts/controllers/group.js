@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('achieveYourLifeApp')
-  .controller('GroupCtrl', function ($scope, $location, $firebase, GroupsFactory) {
+  .controller('GroupCtrl', function ($rootScope, $scope, $location, $firebase, GroupsFactory) {
 
     var authData;
 
@@ -33,11 +33,11 @@ angular.module('achieveYourLifeApp')
     };
 
     $scope.join = function(groupName) {
-      $scope.mygroups[groupName] = true;
+      $scope.mygroups[groupName] = {achievement : ''};
       if(!$scope.groups[groupName].members) {
         $scope.groups[groupName].members = {};
       }
-      $scope.groups[groupName].members[$scope.user.username] = true;
+      $scope.groups[groupName].members[$scope.user.username] = {username : authData.uid, achievement : ''};
       $scope.mygroups.$save();
       $scope.groups.$save();
     };
@@ -45,6 +45,20 @@ angular.module('achieveYourLifeApp')
     $scope.leave = function(groupName) {
       delete $scope.groups[groupName].members[$scope.user.username];
       delete $scope.mygroups[groupName];
+      $scope.mygroups.$save();
+      $scope.groups.$save();
+    };
+
+    $scope.setAchievement = function(achievement, groupName) {
+      $scope.mygroups[groupName].achievement = achievement.$id;
+      $scope.groups[groupName].members[$scope.user.username] = {username : authData.uid, achievement : achievement.$id};
+      $scope.mygroups.$save();
+      $scope.groups.$save();
+    };
+
+    $scope.removeAchievement = function(groupName) {
+      $scope.mygroups[groupName] = {achievement : ''};
+      $scope.groups[groupName].members[$scope.user.username].achievement = '';
       $scope.mygroups.$save();
       $scope.groups.$save();
     };

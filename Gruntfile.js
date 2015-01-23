@@ -60,7 +60,15 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
-      }
+      },
+      e2eTest: {
+        files: ['test/e2e/{,*/}*.js',
+                '<%= yeoman.app %>/scripts/{,*/}*.js',
+                '<%= yeoman.app %>/{,*/}*.html',
+                '.tmp/styles/{,*/}*.css',
+                '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'],
+        tasks: ['protractor-e2e']
+      },
     },
 
     // The actual grunt server settings
@@ -346,18 +354,37 @@ module.exports = function (grunt) {
     },
 
     // Test settings
-  karma: {
-    unit: {
-      configFile: 'test/karma.conf.js',
-      singleRun: false,
-      autoWatch: true
+    karma: {
+      unit: {
+        configFile: 'test/karma.conf.js',
+        singleRun: false,
+        autoWatch: true
+      },
+      server: {
+        configFile: 'test/karma.conf.js',
+        singleRun: false,
+        autoWatch: true
+      }
     },
-    server: {
-      configFile: 'test/karma.conf.js',
-      singleRun: false,
-      autoWatch: true
+
+    protractor: {
+        options: {
+              configFile: "protractor.conf.js", //your protractor config file
+              keepAlive: true, // If false, the grunt process stops when the test fails.
+              noColor: false, // If true, protractor will not use colors in its output.
+              args: {
+                  // Arguments passed to the command
+              }
+          },
+        chrome: {
+            options: {
+                  args: {
+                      browser: "chrome"
+                  }
+              }
+        },
     }
-  }
+
   });
 
 

@@ -63,9 +63,9 @@
       <div class="header">
         <ul class="nav nav-pills pull-right" ng-controller="AccountCtrl">
           <li><a ng-href="#/">Home</a></li>                  
-          <li data-ng-hide="isLoggedIn"><a ng-href="#/demo">Demo</a></li>                    
+          <li data-ng-hide="isLoggedIn"><a ng-href="#/demo" id="demolink" >Demo</a></li>                    
           <li data-ng-hide="!isLoggedIn"><a ng-href="#/account">Account</a></li>                    
-          <li data-ng-hide="!isLoggedIn"><a ng-href="" data-ng-click="logout()">Logout</a></li>
+          <li data-ng-hide="!isLoggedIn"><a ng-href="" ng-click="logout()">Logout</a></li>
           <li data-ng-hide="isLoggedIn" ng-controller="AccountCtrl"> <a ng-click="login()">Login</a></li>
           <li data-ng-hide="isLoggedIn" ng-controller="AccountCtrl"> <a ng-click="signup()">Sign Up</a></li>
         </ul>

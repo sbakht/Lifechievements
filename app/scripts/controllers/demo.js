@@ -8,15 +8,15 @@
  * Controller of the achieveYourLifeApp
  */
 angular.module('achieveYourLifeApp')
-  .controller('DemoCtrl', function ($scope) {
+  .controller('DemoCtrl', function ($scope, AchievementsFactory) {
 
     $scope.init = function() {
       $scope.title = 'Demo';
       $scope.increment = 1;
       $scope.achievements = [{ title : 'My First Achievement', description : 'Click thumbs up 5 times to unlock this achievement!', current : 0, goal : 5, points : 1}];
 
-      $scope.$on('newAchievementBroadcast', function(event, newAchievement) {
-        $scope.achievements.push(newAchievement);
+      $scope.$on('newAchievementBroadcast', function(event, achievement) {
+        $scope.create(achievement)
       });
 
       $scope.$on('deleteAchievementBroadcast', function(event, achievement) {
@@ -24,20 +24,17 @@ angular.module('achieveYourLifeApp')
       });
     };
 
+
+    $scope.create = function(achievement) {
+      AchievementsFactory.create($scope, null, achievement);
+    };
+
     $scope.add = function (achievement, increment) {
-        achievement.current = achievement.current + increment;
-        if(achievement.current > 10000000) {
-          achievement.current = 10000000;
-        }
-        if(achievement.current >= achievement.goal) {
-          $scope.$broadcast('unlockedBroadcast', achievement);
-        }
+      AchievementsFactory.add($scope, null, achievement, increment);
     };
 
     $scope.remove = function(achievement) {
-      $scope.achievements = $scope.achievements.filter(function (el) {
-        return el != achievement;
-      });
+      AchievementsFactory.remove($scope, null, achievement);
     };
 
     $scope.init();

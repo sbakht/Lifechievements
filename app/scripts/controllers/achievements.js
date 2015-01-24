@@ -15,17 +15,19 @@ angular.module('achieveYourLifeApp')
     $scope.init = function() {
       $scope.title = 'Your Account';
       $scope.increment = 1;
+
       var baseUrl = 'https://glowing-torch-9570.firebaseio.com';
       var ref = new Firebase(baseUrl);
       authData = ref.getAuth();
+      
       if (authData) {
-        $scope.achievements = AchievementsFactory(authData.uid);
+        $scope.achievements = AchievementsFactory.getAchievements(authData.uid);
       } else {
         $location.path('/');
       }
 
-      $scope.$on('newAchievementBroadcast', function(event, newAchievement) {
-        $scope.achievements.$add(newAchievement);
+      $scope.$on('newAchievementBroadcast', function(event, achievement) {
+        $scope.create(achievement);
       });
 
       $scope.$on('deleteAchievementBroadcast', function(event, achievement) {
@@ -38,28 +40,20 @@ angular.module('achieveYourLifeApp')
 
     };
 
-    $scope.add = function(achievement, increment) {
-      achievement.current = achievement.current + increment;
-      if(achievement.current > 10000000) {
-        achievement.current = 10000000;
-      }
-      if (achievement.current >= achievement.goal) {
-        $scope.$broadcast('unlockedBroadcast', achievement);
-      }
+    $scope.create = function(achievement) {
+      AchievementsFactory.create($scope, authData, achievement);
+    };
 
-      $scope.save(achievement);
+    $scope.add = function(achievement, increment) {
+      AchievementsFactory.add($scope, authData, achievement, increment);
     };
 
     $scope.save = function(achievement) {
-      if (authData) {
-        $scope.achievements.$save(achievement);
-      }
+      AchievementsFactory.save($scope, authData, achievement);
     };
 
     $scope.remove = function(achievement) {
-      if (authData) {
-        $scope.achievements.$remove(achievement);
-      }
+      AchievementsFactory.remove($scope, authData, achievement);
     };
 
     $scope.init();
